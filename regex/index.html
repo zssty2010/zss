@@ -1,0 +1,992 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- saved from url=(0021)http://zss.hnisi.com/ -->
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:v ="urn:schemas-microsoft-com:vml">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<!-- style加注释是为了防止浏览器不解析CSS代码，造成CSS在网页上直接显示 -->
+		<style>
+			v:*{BEHAVIOR: url(#default#VML)}
+			<!--
+			
+			body {margin:2px; padding:2px; background-color: #EBEBEB;}
+			span {font:normal normal normal 3.5mm '宋体';}
+			input {font:normal normal lighter 2.8mm '宋体'}
+			textarea {font:normal normal lighter 2.8mm '宋体'}
+			#txt_msg {}
+			#noborder {
+				display: inline;
+				width: 100px;
+				height: 18px;
+				border: 0;
+				position: absolute;
+				overflow: hidden;
+				*margin-left:-11px !important;
+			}
+			#preset {
+				font:normal normal normal 3.2mm '方正姚体'; 
+				color:#8484FF;
+				margin-left:0px !important;
+				background-color:#fff;
+				position: absolute;
+				width: 104px;
+				top: -2px;
+				left: -2px;
+			}
+			#btns {
+				position:absolute; 
+				display:inline; 
+				margin-top:-10px; 
+				-webkit-transform:scale(0.8); 
+				-moz-transform: scale(.8);
+                                color:#5f7e01;
+			}
+			.topstop {font:normal normal bold 10px 'Courier New'; color:red;
+				position:fixed; top:0px; width:100%; height:20px; 
+				margin-left:-4px;padding-top:5px; z-index:1000;
+				background:#D8E0F0;text-align:center;
+				opacity: 0.70; /*firefox*/
+				*filter : progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=70,finishOpacity=100); /*IE*/
+				display: none;
+			}
+			
+			#i,#g,#m {*zoom: 75% !important; }
+			label{font:normal normal lighter 4.3mm 'Courier New','Consolas';}
+			#in_regexp {width:330px; margin-left:-5px !important; *margin-left:-10px !important;}
+			#in_txt {width:425px; height:100px; overflow:auto;}
+			#out_replaced {width:425px; height:100px; overflow-y:auto; 
+                                /*font:normal normal lighter 3.4mm '宋体' !important;*/
+                                font:normal normal lighter 2.8mm '宋体';
+                                *word-break:break-all; /*IE*/
+                                word-wrap: break-word; /*CSS3*/
+                                border:1px solid #7F9DB9;
+                                }
+			#img_msg {margin:0px 0px -3px 0px; width:16px; height:16px; position: relative; z-index:-1}
+			#img_err {margin:0px 0px 0px 65px; width:16px; height:16px; position: absolute; }
+			#txt_err {margin:0px 0px 0px 85px; color:red; font-size:9pt;}
+			#img_close {float:right; *cursor:hand; cursor:pointer !important; *margin-top:-15px !important}
+			fieldSet {width:440px; padding:5px 0px 8px 10px; -moz-border-radius: 6px; -webkit-border-radius: 6px;}
+			.keyword {color:#5f7e01;}
+			span a:link,a:visited,a:hover,a:active{color: blue; text-decoration: none;}
+			#total {position:absolute;left:80px;*margin-top:3px !important; margin-top:6px}
+			//-->
+		</style>
+		
+		<!--
+			在 firefox 中。如果直接alert(this),它会弹出两次。如果引用了外部文件(即使是不存在的)就不会这样了,也可以用window.onload事件来保证只执行一次。
+        -->
+		
+		<![if !IE]><script type="text/javascript" src="http://localhost/"></script><![endif]>
+		<!--script>window.onload = function(){if(!location.search)window.open(location.href + "?",'_self','location=0,menubar=0,resizable=0,titlebar=0,toolbar=0',true)}</script-->
+		<script type="text/xaml" id="xaml"><?xml version="1.0"?>
+			<Canvas xmlns="http://schemas.microsoft.com/client/2007"></Canvas></script>
+		
+		<!-- Enable HTML5 -->
+		<!-- uupaa-color.mini.js -->
+		<script type="text/javascript" src='uupaa-color.mini.js'>
+		/*<![CDATA[*/
+		/*]]>*/
+		</script>
+		
+		<!-- uupaa-excanvas.js -->
+		<script type="text/javascript" src='uupaa-excanvas.js'>
+		/*<![CDATA[*/
+		/*]]>*/
+		</script>
+		<!-- End HTML5 -->
+		
+		<!-- Canvas工具对象 -->
+		<script type="text/javascript">
+			var canvas = {
+				clear: function(ctx){
+					ctx.clearRect(0, 0, ctx.canvas.offsetWidth, ctx.canvas.offsetHeight);
+				},
+				
+				drawRight : function(ctx){
+					var g1 = ctx.createLinearGradient(0, 16, 0, 16);
+					//var g1 = ctx.createLinearGradient(8, 4, 8, 8, 4, 32);
+					g1.addColorStop(0.0, 'rgba(59, 158, 24, 1.0)');
+					g1.addColorStop(0.3, 'rgba(159, 240, 0, 0.0)');
+					g1.addColorStop(0.5, 'rgba(59, 158, 24, 0.0)');
+					g1.addColorStop(1.0, 'rgba(0, 120, 0, 0.0)');
+					ctx.fillStyle = g1;
+					ctx.beginPath();
+					ctx.arc(8, 8, 8, 0, Math.PI * 2, 1);
+					ctx.fill();
+					
+					ctx.fillStyle = "white";
+					ctx.beginPath();
+					ctx.moveTo(4,8);
+					ctx.lineTo(6,11);
+					//ctx.lineTo(12,3);
+					ctx.quadraticCurveTo(13,0,13,3);
+					ctx.lineTo(14,5);
+					//ctx.lineTo(6,14);
+					ctx.quadraticCurveTo(13,3,6,14);
+					ctx.lineTo(3,10);
+					ctx.fill();
+				},
+				
+				drawWarn : function(ctx){
+					var g1 = ctx.createLinearGradient(0, 16, 0, 16);
+					g1.addColorStop(0.0, 'rgba(255, 178, 16, 1.0)');
+					g1.addColorStop(0.3, 'rgba(254, 221, 83, 0.0)');
+					g1.addColorStop(0.5, 'rgba(240, 159, 05, 0.0)');
+					g1.addColorStop(1.0, 'rgba(240, 159, 05, 0.0)');
+					ctx.fillStyle = g1;
+					ctx.beginPath();
+					ctx.arc(8, 8, 8, 0, Math.PI * 2, 1);
+					ctx.fill();
+					ctx.clearRect(7, 3, 2 ,7);
+					ctx.clearRect(7, 11, 2 ,2);
+				},
+				
+				drawWrong : function(ctx){
+					var g1 = ctx.createLinearGradient(0, 14, 0, 14);
+					g1.addColorStop(0.0, 'rgba(247, 4, 0, 1.0)');
+					g1.addColorStop(0.3, 'rgba(250, 112, 110, 0.0)');
+					g1.addColorStop(0.6, 'rgba(160, 46, 0, 0.0)');
+					g1.addColorStop(1.0, 'rgba(153, 51, 0, 0.0)');
+					ctx.fillStyle = g1;
+					ctx.beginPath();
+					ctx.arc(7, 7, 7, 0, Math.PI * 2, 1);
+					ctx.fill();
+					
+					ctx.fillStyle = "white";
+					ctx.beginPath();
+					ctx.moveTo(3,4);
+					ctx.lineTo(4,3);
+					ctx.lineTo(11,10);
+					ctx.lineTo(10,11);
+					ctx.fill();
+					
+					ctx.moveTo(3,10);
+					ctx.lineTo(4,11);
+					ctx.lineTo(11,4);
+					ctx.lineTo(10,3);
+					ctx.fill();
+				},
+				
+				drawClose : function(ctx){
+					var g1 = ctx.createLinearGradient(0, 14, 0, 14);
+					g1.addColorStop(0.0, 'rgba(247, 4, 0, 1.0)');
+					g1.addColorStop(0.3, 'rgba(250, 112, 110, 0.0)');
+					g1.addColorStop(0.6, 'rgba(160, 46, 0, 0.0)');
+					g1.addColorStop(1.0, 'rgba(153, 51, 0, 0.0)');
+
+					ctx.fillStyle = g1;
+					ctx.beginPath();
+					ctx.moveTo(0,4);
+					ctx.quadraticCurveTo(0,0,4,0)
+					ctx.lineTo(10,0);
+					ctx.quadraticCurveTo(14,0,14,4);
+					ctx.lineTo(14,10);
+					ctx.quadraticCurveTo(14,14,10,14);
+					ctx.lineTo(4,14);
+					ctx.quadraticCurveTo(0,14,0,10);
+					ctx.lineTo(0,4);
+					ctx.fill();
+					
+					ctx.fillStyle = "white";
+					ctx.beginPath();
+					ctx.moveTo(3,4);
+					ctx.lineTo(4,3);
+					ctx.lineTo(11,10);
+					ctx.lineTo(10,11);
+					ctx.fill();
+					
+					ctx.moveTo(3,10);
+					ctx.lineTo(4,11);
+					ctx.lineTo(11,4);
+					ctx.lineTo(10,3);
+					ctx.fill();
+				},
+				
+				drawQuestion : function(ctx){
+					var g1 = ctx.createLinearGradient(0, 14, 0, 14);
+					g1.addColorStop(0.0, 'rgba(247, 4, 0, 1.0)');
+					g1.addColorStop(0.3, 'rgba(250, 112, 110, 0.0)');
+					g1.addColorStop(0.6, 'rgba(160, 46, 0, 0.0)');
+					g1.addColorStop(1.0, 'rgba(153, 51, 0, 0.0)');
+
+					ctx.fillStyle = g1;
+					ctx.beginPath();
+					ctx.moveTo(0,4);
+					ctx.quadraticCurveTo(0,0,4,0)
+					ctx.lineTo(10,0);
+					ctx.quadraticCurveTo(14,0,14,4);
+					ctx.lineTo(14,10);
+					ctx.quadraticCurveTo(14,14,10,14);
+					ctx.lineTo(4,14);
+					ctx.quadraticCurveTo(0,14,0,10);
+					ctx.lineTo(0,4);
+					ctx.fill();
+					
+					ctx.fillStyle = "white";
+					ctx.beginPath();
+					ctx.moveTo(3,4);
+					ctx.lineTo(4,3);
+					ctx.lineTo(11,10);
+					ctx.lineTo(10,11);
+					ctx.fill();
+					
+					ctx.moveTo(3,10);
+					ctx.lineTo(4,11);
+					ctx.lineTo(11,4);
+					ctx.lineTo(10,3);
+					ctx.fill();
+				}
+			}
+		</script>
+				
+		<!-- Cross Browser -->
+		<script language="javascript"> 
+			//var  isIE  = !!(window.attachEvent && navigator.userAgent.indexOf('Opera') === -1);
+			var Browser = {};
+			(function(){
+				var s, ua = navigator.userAgent.toLowerCase();
+				(s = ua.match(/msie ([\d.]+)/)) ? (function(){Browser.isIE = s; Browser.version = s[1]}()):
+				(s = ua.match(/firefox\/([\d.]+)/)) ? (function(){Browser.isFirefox = s; Browser.version = s[1]}()):
+				(s = ua.match(/chrome\/([\d.]+)/)) ? (function(){Browser.isChrome = s; Browser.version = s[1]}()):
+				(s = ua.match(/opera.([\d.]+)/)) ? (function(){Browser.isOpera = s; Browser.version = s[1]}()):
+				(s = ua.match(/version\/([\d.]+).*safari/)) ? (function(){Browser.isSafari = s; Browser.version = s[1]}()): 0;
+			})();
+			
+			/* innerText method*/
+			if(!Browser.isIE){
+				HTMLElement.prototype.__defineGetter__("innerText", function(){
+						var anyString = "";
+						var childS = this.childNodes;
+						for(var i=0; i<childS.length; i++) {
+							if(childS[i].nodeType==1){
+								anyString += childS[i].tagName=="BR" ? '\n' : childS[i].innerText;
+							}else if(childS[i].nodeType==3){
+								anyString += childS[i].nodeValue;
+							}
+						}
+						return anyString;
+					}
+				);
+
+				HTMLElement.prototype.__defineSetter__("innerText", function(sText){
+						this.textContent=sText;
+					}
+				);
+			}
+
+			function parseXML(str){
+				 if (Browser.isIE){
+					var result  =  new ActiveXObject("microsoft.XMLDOM");
+					result.loadXML(str);
+				} else {
+					var parser  =  new DOMParser();
+					var result  =  parser.parseFromString(str, "text/xml");
+				}
+				 return result;
+			}
+			
+			/* XPath */
+			if (!Browser.isIE){
+				var  ex;
+				XMLDocument.prototype.__proto__.__defineGetter__("xml", function (){
+					 try {
+						return this.innerHTML
+						 //return new XMLSerializer().serializeToString(this, "text/xml");
+					} catch (ex){
+						 var  d  =  document.createElement("div");
+						d.appendChild(this.cloneNode(true));
+						 return  d.innerHTML;
+					}
+				});
+				Element.prototype.__proto__.__defineGetter__("xml", function (){
+					 try {
+						return this.innerHTML
+						 //return new XMLSerializer().serializeToString(this, "text/xml");
+					} catch (ex){
+						 var  d  =  document.createElement("div");
+						d.appendChild(this.cloneNode(true));
+						 return  d.innerHTML;
+					}
+				});
+				XMLDocument.prototype.__proto__.__defineGetter__("text",  function (){
+					if(/\[CDATA\[/i.test(this.firstChild.data))
+						return this.firstChild.data.replace(/\[CDATA\[/i,'').replace(/\]\]/,'');
+					else
+						return   this.firstChild.textContent
+				});
+				Element.prototype.__proto__.__defineGetter__("text",  function (){
+					if(/\[CDATA\[/i.test(this.firstChild.data))
+						return this.firstChild.data.replace(/\[CDATA\[/i,'').replace(/\]\]/,'');
+					else
+						return this.textContent
+				});
+
+				XMLDocument.prototype.selectSingleNode = Element.prototype.selectSingleNode = function (xpath){
+					 var  x = this .selectNodes(xpath)
+					 if ( ! x  ||  x.length < 1 ) return   null ;
+					 return  x[ 0 ];
+				}
+				XMLDocument.prototype.selectNodes = Element.prototype.selectNodes = function (xpath){
+					 var  xpe = new XPathEvaluator();
+					 var  nsResolver  =  xpe.createNSResolver( this .ownerDocument == null ? 
+										this .documentElement : this .ownerDocument.documentElement);
+					 var  result = xpe.evaluate(xpath,  this , nsResolver,  0 ,  null );
+					 var  found = [];
+					 var  res;
+					 while (res = result.iterateNext())
+						found.push(res);
+					 return  found;
+				}
+			}
+
+		</script>
+		
+		<!-- Init -->
+		<script language="javascript">
+			self.resizeTo(500,588);
+			self.moveTo(300,100);
+			
+			String.prototype.changecolor = function(c){return this.replace(/color="\w+"/i,"color=" + c);}
+			
+			function $$(obj){return document.getElementById(obj);}
+		
+			var Debug ={
+				all:function(obj){
+					var fullstr = ''
+					for(var p in obj){
+						fullstr += p + " = " + obj[p] +	"<br>";
+					}
+					return fullstr;
+				},
+				ls:function(obj){
+					var elem = document.createElement("div")
+					for(var p in obj){
+						elem.innerHTML += p + " = " + obj[p] +
+									//eval("obj." + p) + 如果p是数字，表达式有误
+										"<br>";
+					}
+					document.body.appendChild(elem);
+				},
+				showClicked:function(){
+					document.onclick = function(e){
+						alert(window.event ? event.srcElement.outerHTML : e.target.xml);
+					}
+				}
+			};
+
+			document.onkeydown = function(e){
+				var srcElement = window.event ? event.srcElement : e.target;
+				var keyCode = window.event ? event.keyCode : e.which;
+				if(srcElement == $$("in_regexp") && keyCode == 40)
+					$$("in_txt").focus();
+				if(srcElement == $$("in_txt") && keyCode == 38)
+					$$("in_regexp").focus();
+			}
+			
+			function Notify(msg, time){
+				$$("notify").innerHTML = msg;
+				$$("notify").parentNode.style.display = "inline";
+				canvas.drawClose($$("img_close").getContext('2d'));
+				$$("img_close").onclick = function(){$$('notify').parentNode.style.display='none';}
+				if(time){
+					setInterval("$$('notify').parentNode.style.display='none'",time);
+				}
+			}
+                        
+			/**定位*/
+			var Positioning = {
+				curpos:0,
+				befpos:0,
+				items:[],
+				getCursorP : function(){
+					var obj = $$("in_txt");
+					if(obj.selectionStart){         //Firefox,Chrome,Safari以及Opera
+						return obj.selectionStart;  //定位(选择时)起始位位置"index"
+						//obj.selectionEnd          //定位(选择时)蕖烁位變c坦訑}譄之赢邖藝选讗謩俣私c
+					}else if(obj.createTextRange){  //only IE
+						obj.focus();
+						var rng = document.selection.createRange();
+						var range_all = document.body.createTextRange();
+						range_all.moveToElementText(obj);
+						for (var start = 0; range_all.compareEndPoints("StartToStart", rng) < 0; start++)
+							range_all.moveStart('character', 1);
+						for (var i = 0; i <= start; i ++){
+							if (obj.value.charAt(i) == '\n')
+								start++;
+						}
+						return start;
+		
+						//rng.moveStart('character', obj.value.length);
+						//return rng.text + " " + rng.text.replace(/(^\s*)|(\s*$)/g,'').length;
+					}
+				},
+				previous : function(){
+					this.befpos = this.curpos;
+					/*var cursorX = this.getCursorP();
+					for(var i = this.items.length - 1; i >=0; i--){
+						if(this.items[i]['0'] <= cursorX){
+							this.curpos = i;
+							break;
+						}
+					}*/
+					if(this.curpos >= 0){
+						this.curpos >0 && this.curpos--;
+						this.selectText($$("in_txt"), this.curpos);
+					}
+				},
+				next : function(){
+					this.befpos = this.curpos;
+					/*var cursorX = this.getCursorP();
+					for(var i = 0; i < this.items.length; i++){
+						if(this.items[i]['0'] >= cursorX){
+							this.curpos = i;
+							break;
+						}
+					}*/
+					if(this.curpos <= this.items.length - 1){
+						this.curpos < this.items.length - 1 && this.curpos ++;
+						this.selectText($$("in_txt"), this.curpos);
+					}
+				},
+				selectText : function(obj, curpos){
+					if (this.items.length === 0) return;
+					var index = this.items[curpos]['0'];
+					var lastIndex = this.items[curpos]['1'];
+					if(obj.setSelectionRange){          //Firefox,Chrome,Safari以及Opera
+						obj.setSelectionRange(index, lastIndex);
+						obj.focus();
+					}else if(obj.createTextRange){      //only IE
+						var rng = obj.createTextRange();
+						rng.collapse(true);
+						rng.moveStart("character",index);
+						rng.moveEnd("character",lastIndex-index);
+						rng.select();
+					}
+					//jQuery太慢
+					//$("#out_replaced > font:eq(" + this.befpos + ")").css('background-color','').css('color','red');
+					//$("#out_replaced > font:eq(" + this.curpos + ")").css('background-color','#316AC5').css('color','white');
+					$fontObjs = $$("out_replaced").getElementsByTagName('font');
+					$fontObjs[this.befpos].style.background = "";
+					$fontObjs[this.curpos].style.background = "#316AC5";
+	
+					/*使用Range选择文本。但IE不支持多选中状态，Firefox却支持。
+					var range = document.createRange();
+					//alert($("#out_replaced > font:eq(" + curpos + ")")[0].firstChild);
+					range.setStart($("#out_replaced > font:eq(" + curpos + ")")[0].firstChild, 0);
+					range.setEnd($("#out_replaced > font:eq(" + curpos + ")")[0].firstChild, lastIndex - index);
+					var sel = window.getSelection();
+					sel.removeAllRanges();
+					sel.addRange(range);
+					*/
+				}
+			}
+		</script>
+	</head>
+	<body scroll="auto">
+		<!-- xml标签不能放置于head中，firefox对此要求严格 -->
+		<xml id="island">
+			<root><imgsrc id="ico_right"><![CDATA[data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAGXRFWHRTb2Z0d2FyZQBBZG9i
+ZSBJbWFnZVJlYWR5ccllPAAAAKtQTFRFmcwAAIAA////Wq0Ae70AGIwAOZwAL5gAZLIAA4IA
+LJcAtdunkskA+fz5ZLJDHY8AvN2vO54PV6wAksl9HI4Ak8l+CYUAhcIAbbYApdKTNpsA8fjx
+8Pfwa7VB6fTIqdWY6vXqVKovOJwCisVyqNSons+eptKTlcuAN5sBYbELWq4FUKcdaLQ9mc2F
+ZLJUnc+KGYwBWKwBzebNVasxWKw0A4EDVaow2Oye////gmY+ZQAAADl0Uk5T////////////
+//////////////////////////////////////////////////////////////8AOqxlQAAA
+AKtJREFUeNo8j1cSwjAMRGWBS5yQ3hMYeu/V9z8Zdkx4Myq7+tGC0rTJM4oeSWt20HWqRQFQ
+iO3FGovYgw7vtjbGJoaez14bTe31GifevIFM/DUCiAxm5dCCqFv5Bj6wIO7M4MAZGx8ZQzww
+Awc/pYhXxDM1pD6ElLwQcUU6aAhKOmSJd6sdqR9zA0KmVpPANa9XgfO7B5UNpyTNCcmp7NMq
+Ffqc+2pk1q8AAwBtChMzbL23oQAAAABJRU5ErkJggg==
+]]>
+				</imgsrc>
+				<imgsrc id="ico_info"><![CDATA[data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAGXRFWHRTb2Z0d2FyZQBBZG9i
+ZSBJbWFnZVJlYWR5ccllPAAAAMBQTFRF2uLl19/hwc7R2N7gL01V////s8PH6/b92eHj2uHj
+v83R6fT99fr/6PT9+v//2ePm2eLj2ODi5/P89Pb31+Di3eXm6fX+wc7UQl5m5enq/f//2+Lj
+w8zP7Pb+ssPH7/n/8/b36vb/GTlB/v7+/v7//v//xdDTydLTvMrQJ0hR2eLlztXX3Ojx3+vz
+9/v/6Ovs2ODjDzM96PT84u716vX+/Pz89fr+7Pf/5/T92uPjzdriztrhws/Uzdzj7/r/////
+/RwT1AAAAEB0Uk5T////////////////////////////////////////////////////////
+////////////////////////////AMJ7sUQAAADKSURBVHjaLI9XEoNACEBZs+zaoqaaYoom
+jum9N+5/q7AmMMx7MHwAkAlhKWWJUoHLtu9jxPHddn6DGuU42W4nmLPywIkQsdLpCEbkmI0p
+WzGfF4wpbzT7LHhO6GzYb4LVMNJdLruGDQuUISb7fVKKArW5+D6SlIS+f9kocI8DrXsvKV89
+rQdHF8T76nlBLGUceN71LYCg2q4GsyyjgIVbztFBr+i50odRWJ6+C+un9PNJT/Xw/5xDj/Xt
+tn4s/s9xtNzh0G2V+hVgAGHVHx0SPFm1AAAAAElFTkSuQmCC
+]]>
+				</imgsrc>
+				<imgsrc id="ico_warn"><![CDATA[data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAMAAABhEH5lAAAAGXRFWHRTb2Z0d2FyZQBBZG9i
+ZSBJbWFnZVJlYWR5ccllPAAAAMBQTFRF9ZYV/7MQ98R++vjz9pwO9syR9pkV+qIC+KIB9KED
+/9V+/7EP9c+W+JYV+qES/a4T+aEF98uQ/rQW+M6V+sVi/stX+KAB/7QT////+KEC9qlA+/39
+96AD/bQQ+ffx+/3+/7ER96AB98qM+LIs+qQT95sK9KtC+aMC/7MS/vjs/P38+/z8+/z9+qIA
+/KYV9qAI+qEJ9aED9cWA/v789psO+J8D+6IU+qUU//3+9qIB9pwQ9KpA+v39+/389ZcU////
+E8LALAAAAEB0Uk5T////////////////////////////////////////////////////////
+////////////////////////////AMJ7sUQAAADeSURBVHjaVJDrcoJADIU3iIDCgojWZAUL
+Xqszarf17gy8/1uZVRna8yNn800mm0RUb2H9qMQzthIlpUpaDYrLc+RDtHPiN9pYYQ5fwMpD
+64XaIWejXxwxPsUbRhPHZ9TFSxcyyB1TFcyzDGCIOARm84DRMjJt+oh98PmPOyPpbl0Woonu
+ShhEbo1W7BIFLnsei9ZrY9634qpkQR4VNJsV9EG0MO2rMiWiAeKALS3NEOOpXVCPEK9E3mE6
+fu5o3dKOTrXWR/unWdved/TeFu0/xwmULFVQfTbo3w0fAgwAr5IrHEM0bP0AAAAASUVORK5C
+YII=
+]]>
+				</imgsrc>
+				<imgsrc id="ico_wrong"><![CDATA[data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAMAAABhEH5lAAAAGXRFWHRTb2Z0d2FyZQBBZG9i
+ZSBJbWFnZVJlYWR5ccllPAAAAL1QTFRFmTMA9wQA/v7+////uCMAzRkA9gUA2bem8QcA+/r5
+nz8P4Q8A3L2upC0A/cC//dDPxxwAyBsA2LWjo0YYqjoQvDEQ9xQQrVsz7NnP6dTJ+dLP7tfP
+5cy/2rin4x0PvCEA0aeSoi4A5Q0AsGI80CcP0xYA9xUQrFkxvSMC7tzT9tbS1rKf8tjSoTME
+xI9z8N3W0qiTuXRSnzEB0aiT+tXS99nV79rS89vVnzAAsmU/oDID0aeT27ur+tjV////t6cp
+MQAAAD90Uk5T////////////////////////////////////////////////////////////
+//////////////////////8AjiZ8FwAAAMJJREFUeNpk0NcSgjAQBdCNq8AEAkqxIIiKNOvY
+O///WSaomBnvy945k4fdQPkXeI/H1nGuC4nuu86UkGlnZX9pHWmkipZ/aB+ROrld0UUjltkl
+pGtaRLsJCtuKYqKVphaaitIOOWWJro98fB7QH+l6knGCFs/siDifiQaCmjzeGculJ5qg3oQx
+d4ibEw5dxiY9TgYABNintMABr4ZYgs9+QAHooOC12ksFKZ+Dxj8Zf89WpTf15xgxQFyWDYnk
+vAQYAF/CKJi1MuGTAAAAAElFTkSuQmCC
+]]>
+				</imgsrc>
+			</root>  
+		</xml>
+		
+		<noscript>
+			<div class="topstop" style="display: block; height:100%">需要启用脚本支持！</div>
+		</noscript>
+		<!-- 固定的浮动层非常简单。只要有<!DOCTYPE头，然后设置position:fixed即可 -->
+		<div class="topstop"><div id="notify" style="display:inline;">&nbsp;</div><canvas id="img_close" width="16" height="16"></canvas></div>
+		<fieldSet>
+			<span style="color:#5f7e01"><wstr>预&nbsp;&nbsp;&nbsp;&nbsp;设：</wstr></span>
+			<div id="noborder">
+				<select id="preset">
+					<option value=''></option>
+					<option value="\d{3}-\d{8}|\d{4}-\d{7}">电话号码</option>
+					<option value="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">邮箱</option>
+					<option value="\d(?=\.[\d]+$)">小数</option>
+					<option value="[\u4e00-\u9fa5]">中文字符</option>
+					<option value="^[A-Za-z]+$">26字母</option>
+					<option value="^[A-Za-z0-9]+$">字母+数字</option>
+				</select>
+			</div><br/>
+			<span style="color:#5f7e01;margin-top:10px"><wstr>正&nbsp;则&nbsp;式：</wstr></span>
+			<input id="in_regexp"/>
+					<div id="btns">
+						<label for="i" title="忽略大小写"><input id="i" type="checkbox">i&nbsp;</input></label><br/>
+						<label for="g" title="匹配所有"><input id="g" type="checkbox">g&nbsp;</input></label><br/>
+						<label for="m" title="多行匹配"><input id="m" type="checkbox">m&nbsp;</input></label><br/>
+					</div><br/>
+			<!--[if IE]><canvas id="img_err" width="14" height="14" style="margin-top:2px"></canvas><![endif]-->
+			<![if !IE]><img id="img_err" ondragstart="javascript:return false"/><![endif]>
+			<span id="txt_err">&nbsp;</span>
+		</fieldSet>
+		<fieldSet>
+			<span style="color:#5f7e01;margin-top:5px;"><wstr>输入字符：</wstr> <span id="total"></span></span>
+			<span style="color:#5f7e01;margin-left:170px">
+				[test]方法结果：</span>
+				<!--[if IE]><canvas id="img_msg" width="16" height="16" ></canvas><![endif]-->
+				<![if !IE]><img id="img_msg" ondragstart="javascript:return false"></img><![endif]>
+				<span id="txt_msg">&nbsp;</span><br/>
+				<textarea id="in_txt"></textarea>
+                </fieldSet>
+		<fieldSet>
+			<span style="color:#5f7e01;margin-top:5px"><wstr>匹配结果：</wstr><span id='_matched'></span>
+				<a id='previous' class="keyword" href='javascript:Positioning.previous();' hidefocus>上一个</a> 
+				<a id='next' class="keyword" href='javascript:Positioning.next();' hidefocus>下一个</a></span> <span id='during'></span><br/>
+			<div id="out_replaced" readonly></div>
+		</fieldSet>
+		<fieldSet>
+			<span style="color:#5f7e01;margin-top:5px;"><wstr>RegExp对象：</wstr></span>
+			<!-- 标签id最好与页面所用的全局变量名不相同。 IE有时可以真接以ID引用标签对象-->
+			<span class="keyword">[<a id="_pattern" href="javascript:;">pattern</a> <a id="patternH" href="javascript:;">?</a>]</span>
+			<span class="keyword">[<a id="_RegExp" href="javascript:;">RegExp</a> <a id="RegExpH" href="javascript:;">?</a>]</span><br>
+			<span style="color:#5f7e01;margin-top:5px;"><wstr>RegExp方法：</wstr></span>
+			<span class="keyword">[test <a id="testH" href="javascript:;">?</a>]</span>&nbsp;
+			<span class="keyword">[<a id="_exec" href="javascript:;">exec</a> <a id="execH" href="javascript:;">?</a>]</span>&nbsp;
+			<span class="keyword">[compile <a id="compileH" href="javascript:;">?</a>]</span><br>
+			<span style="color:#5f7e01;margin-top:5px;"><wstr>String方法：</wstr></span>
+			<span class="keyword">[<a id="_search" href="javascript:;">search</a> <a id="searchH" href="javascript:;">?</a>]</span>
+			<span class="keyword">[<a id="_split" href="javascript:;">split</a> <a id="splitH" href="javascript:;">?</a>]</span>
+			<span class="keyword">[<a id="_match" href="javascript:;">match</a> <a id="matchH" href="javascript:;">?</a>]</span>
+			<span class="keyword">[<a id="_replace" href="javascript:;">replace</a> <a id="replaceH" href="javascript:;">?</a>]</span>
+			<div id="models" style="display: none">
+				1 <input /> 2 <input />
+			</div>
+		</fieldSet>
+	</body>
+	
+	<!-- jquery-1.3.2.min.js-->
+	<script type="text/javascript" src='jquery-1.3.2.min.js'>
+	//<![CDATA[
+	//]]>
+	</script>
+	
+	<!--jquery.bt.uupaa.min.js-->
+	<script type="text/javascript" src='jquery.bt.uupaa.min.js'>
+	//<![CDATA[
+	//]]>
+        </script>
+
+	<!-- fontdetect.js -->
+	<script type="text/javascript" src='fontdetect.js'>
+	//<![DATA[
+	//]]>
+	</script>
+	
+	<!-- ierange-m2-packed.js -->
+    <!--[if IE]>
+	<script type="text/javascript" src='ierange-m2-packed.js'>
+	//<![DATA[
+	//]]>
+	</script>
+    <![endif]-->
+    
+	<script type="text/javascript">
+		var ref_island = parseXML(document.getElementById('island').xml);
+		
+		$("#previous,#next").css('visibility','hidden');
+		if(Browser.isIE){ //window.onload
+			window.attachEvent("onload",load);
+		}else{
+			window.addEventListener("load",load,false);
+		}
+		
+		function load(){
+			if(Browser.isFirefox && !new Detector().test("方正姚体")){
+				Notify("您使用的FireFox浏览器未开启“页面字体支持”！您看到的字体可能不太好看");
+			}
+
+			for(var id in {i:'i',g:'g',m:'m'}){
+				$$(id).onclick = function(){
+					changeRegExp();
+					changeTestStatus();
+				}
+			}
+            
+			var TipInfo ={
+				trigger: ['mouseover','mouseout'], 
+				positions: 'left',
+				strokeWidth: 0,
+				cssStyles: {
+					width: Browser.isIE ? '230px' : '260px',
+					padding: '5px 10px',
+					fontFamily: '"Courier New",tahoma,verdana,arial,sans-serif', 
+					fontSize: Browser.isIE ? '11px' : '14px',
+					color: '#1E2F4B'
+				},
+				fill: '#FAE081'
+			};
+			$('#i').parent().bt("匹配时忽略大小写控制。<br>例如：/i/<font style='font-weight:bolder;color:#C71585'>i</font>.test('I'); //true", TipInfo);
+			$('#g').parent().bt("匹配所有符合正则式的位置,默认情况只返回第一个的位置。例如：<br>" + 
+											"\"deer\".replace(/e/,'o'); //doer <br>"+
+                                            "\"deer\".replace(/e/<font style='font-weight:bolder;color:#C71585'>g</font>,'o');//door", TipInfo);
+			$('#m').parent().bt("在使用^、$符号组成唯一匹配时，使其具有逐行匹配的效用。例如:<br>" +
+                                            "var pattern = /^\\d$/<font style='font-weight:bolder;color:#C71585'>m</font>;<br>pattern.test(\"abc\\n123\"); //true", TipInfo);
+			jQuery.bt.defaults.closeWhenOthersOpen = true;
+			var TipHelp = {
+					trigger: 'click', 
+					positions: 'top',
+					cssStyles: {
+						width:'300px',
+						fontFamily: '"Courier New",tahoma,verdana,arial,sans-serif', 
+						fontSize: '13px',
+						color:'#555555'
+					}, 
+					fill: '#FEF889'
+			};
+			$('#patternH').bt("正则表达式对象,构成方式有:<br>1、\"Subexpressions\":<br>&nbsp;&nbsp;var pattern=/\w+/ig; <br> " +
+												"2、\"RegExp Constructor\":<br>&nbsp;&nbsp;var pattern=new RegExp(\"\w+\",\"ig\");", TipHelp);
+			$('#RegExpH').bt("RegExp类有很多静态属性,可以全局引用。它们是由test或exec方法执行时修改的。",TipHelp);
+			$('#testH').bt("test()方法可看成是exec()方法的简化版,返回Boolean类型表示是否具有匹配项。",TipHelp);
+			$('#execH').bt("exec()方法可以返回较多的信息，如：第一次匹配的位置\"index\"，匹配值的数组等。",TipHelp);
+			$('#compileH').bt("compile()方法和RegExp有相同的constructor,用来重新构成表达式对象。",TipHelp);
+			$('#searchH').bt("search(pattern)方法只用来返回满足正则式的第一个字符串的起始位置\"index\"。",TipHelp);
+			$('#splitH').bt("split(pattern)方法使用所有满足正则式的字符串作为分隔点，返回一个数组。",TipHelp);
+			$('#matchH').bt("match(pattern)方法返回所有满足正则式的字符串数组。",TipHelp);
+			$('#replaceH').bt("replace(pattern, newString)方法将满足正则表达式的所有字符串替换成给定的字符串。",TipHelp);
+
+			TipDynamic = {
+					trigger: 'click', 
+					positions: 'top',
+					cssStyles: {
+						width:'420px',
+						fontFamily: '"Courier New",tahoma,verdana,arial,sans-serif', 
+						fontSize: '12px',
+						color:'#1E2F4B'
+					}, 
+					fill: '#CCFF99'
+			};
+			
+			{/* patternTip*/
+				window.patternTip = "pattern.source &nbsp;&nbsp;&nbsp;&nbsp;表达式的内容(不包括标志符),只读属性<br>" +
+					"pattern.global &nbsp;&nbsp;&nbsp;&nbsp;标识pattern是否有global(g)标志,只读属性<br>" +
+					"pattern.ignoreCase 标识pattern是否有ignoreCase(i)标志,只读属性<br>" +
+					"pattern.multiline &nbsp;标识pattern是否有multiline(m)标志,只读属性<br>" +
+					"pattern.lastIndex &nbsp;返回或指定下一个匹配字符串的起始位置,读|写属性<br>" +
+					" 该属性在global=true条件下,循环调用test()或exec()方法后时变化。";
+				TipDynamic.contentSelector = "patternTip";// contentSelector:  "$(this).attr('title')", 内容 = eval(opt.contentSelector);
+				$('#_pattern').bt(TipDynamic);
+			}
+			{/* RegExpTip*/
+				window.RegExpTip = "RegExp.$1~$9 <span style='margin-left:78px'>返回有匹配值的前9个子表达式</span><br>" +
+					"RegExp.input  <span style='margin-left:42px'>($_) 返回输入的文本。</span><br>" +
+					"RegExp.index <span style='margin-left:78px'>返回当前匹配项的首字符位置。</span><br>" +
+					"RegExp.lastIndex <span style='margin-left:50px'>应使用pattern.lastIndex替代。</span><br>" +
+					"RegExp.lastMatch &nbsp;&nbsp;($&) 最近一次匹配成功的文本。<br>" +
+					"RegExp.lastParen &nbsp;&nbsp;($+) 最近一次匹配成功的子表达式。<br>" +
+					"RegExp.leftContext ($`) 最近一次匹配成功的文本的左边的文本。<br>" +
+					"RegExp.rightContext($') 最近一次匹配成功的文本的右边的文本。<br>";
+				TipDynamic.contentSelector = "RegExpTip";
+				$('#_RegExp').bt(TipDynamic);
+			}
+			{/* execTip*/
+				window.execTip = "var result = pattern.exec(string);<br>" +
+					"result &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;返回满足正则表达式的字符串数组。<br>" +
+					"result.length &nbsp;&nbsp;&nbsp;返回满足正则表达式的字符串数组的长度。<br>" +
+					"result.index &nbsp;&nbsp;&nbsp;&nbsp;返回当前匹配项的首字符位置。<br>" +
+					"result.lastIndex 与pattern.lastIndex相同,<font color=red>但只IE存在此属性。</font>";
+				TipDynamic.contentSelector = "execTip";
+				$('#_exec').bt(TipDynamic);
+			}
+			{/* searchTip*/
+				window.searchTip = "first index is <font color='red'>-1</font>";
+				TipDynamic.cssStyles = {
+					width:'140px',
+					fontFamily: '"Courier New",tahoma,verdana,arial,sans-serif', 
+					fontSize: '13px',
+					color:'#1E2F4B'
+				};
+				TipDynamic.fill = "#CCFF99";
+				TipDynamic.contentSelector = "searchTip";
+				$('#_search').bt(TipDynamic);
+			}
+			{/* splitTip*/
+				window.splitTip = "var result = ［string.split(pattern)｜string.split(str)］";
+				TipDynamic.cssStyles = {
+					width:'400px',
+					fontFamily: '"Courier New",tahoma,verdana,arial,sans-serif', 
+					fontSize: '12px',
+					color:'#1E2F4B'
+				};
+				TipDynamic.fill = "#CCFF99";
+				TipDynamic.contentSelector = "splitTip";
+				$('#_split').bt(TipDynamic);
+			}
+			{/* matchTip*/
+				window.matchTip = "var result = string.match(pattern);<br>" +
+					"result &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;返回满足正则表达式的字符串数组。<br>" +
+					"result.input &nbsp;&nbsp;&nbsp;&nbsp;返回String的内容。<font color=red>仅IE存在此属性</font><br>" +
+					"result.index &nbsp;&nbsp;&nbsp;&nbsp;返回最后一个匹配项的首字符位置。<font color=red>仅IE</font><br>" +
+					"result.lastIndex 与pattern.lastIndex同一个意思。<font color=red>仅IE</font><br>" +
+					"result.length &nbsp;&nbsp;&nbsp;返回满足正则表达式的字符串数组的长度。";
+					
+				TipDynamic.contentSelector = "matchTip";
+				$('#_match').bt(TipDynamic);
+			}
+			//$("#in_txt").bind( Browser.isIE ? "mousewheel" : "DOMMouseScroll",function(){
+			$("#in_txt").bind("scroll",function(){
+				$$("out_replaced").scrollTop = $$("in_txt").scrollTop * $$("out_replaced").scrollHeight / $$("in_txt").scrollHeight;
+			});
+			
+			//为了保留用户输入。
+			$('#in_regexp').bind("beforepaste keypress",function(evt){$(this).attr('needsave','1')});
+			$("#preset").bind("change",function(evt){
+				if($('#in_regexp').attr('needsave') == '1'){
+					$(this).children('option:eq(0)')[0].value = $$('in_regexp').value;
+					$('#in_regexp').attr('needsave','0')
+				}
+				$$('in_regexp').value = this.value
+			});
+		}
+        
+		(function(){
+			var maxlength = 0;
+			var wstrs = document.getElementsByTagName('wstr');
+			for(var obj in wstrs){
+				if(typeof wstrs[obj] == "object"){
+					if(wstrs[obj].innerText.length > maxlength)
+						maxlength = wstrs[obj].innerText.length;
+				}
+			}
+			for(var obj in wstrs){
+				if(typeof wstrs[obj] == "object"){
+					var text = wstrs[obj].innerText;
+				}
+			}
+		})();
+		        
+		function changeRegExp(){
+			$$("txt_err").innerHTML = '&nbsp;';
+			//$$("txt_regexp").innerHTML = '&nbsp;';
+			if(Browser.isIE)
+				canvas.clear($$("img_err").getContext('2d'));
+			else
+				$$("img_err").src = null;
+			try{
+				if($$("in_regexp").value != ''){
+					var exp = "/" + $$("in_regexp").value + "/" + (function(){
+						var globleproperty = [];
+						if($$("i").checked)
+							globleproperty.push("i");
+						if($$("g").checked)
+							globleproperty.push("g");
+						if($$("m").checked)
+							globleproperty.push("m");
+						return globleproperty.join('');
+					})();
+					
+			//		$$("txt_regexp").innerHTML ="完&nbsp;整&nbsp;式：" + exp;
+					
+					eval("window.pattern = " + exp);
+					patternTip = "pattern.source = " + pattern.source + " <br>" +
+							"pattern.global (g)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=" + pattern.global + " <br>" +
+							"pattern.ignoreCase (i)&nbsp;=" + pattern.ignoreCase + " <br>" +
+							"pattern.multiline  (m)&nbsp;&nbsp;=" + pattern.multiline + " <br>";
+				}
+			}catch(err){
+				if(Browser.isIE)
+					canvas.drawWrong($$("img_err").getContext('2d'));
+				else
+					$$("img_err").src = ref_island.documentElement.selectSingleNode('/root/imgsrc[4]').text;
+				$$("txt_err").innerHTML = err.message;
+			}
+		}
+		
+		function changeTestStatus(){
+			var origin = $$("in_txt").value;
+			$("#total").html(origin.length);
+			$$("txt_msg").innerHTML = '&nbsp;';
+			if(Browser.isIE)
+				canvas.clear($$("img_msg").getContext('2d'));
+			else
+				$$("img_msg").src = null;
+			if(typeof pattern != "undefined"){			//检测变量是否存在
+				pattern.lastIndex = 0;                  //pattern不变的情况下。要从头开始搜索可以手动设置lastIndex为零。
+				var input = origin.replace(/\r/g,'');   //IE中RegExp对象会把\r当作一个字符
+														//而movestart把\r\n一起作为一个字符，因而会影响定位的准确性。
+				var result = pattern.exec(input);
+				var output = !!result ? '' : origin;    //无匹配项则原样输出
+				Positioning.curpos = 0;
+				Positioning.items.length = 0;     		//remove all elements
+				var lastIndex = 0;                      //用来记录pattern.lastIndex，然后和result.index搭配取得未匹配的部分。
+				if(result){
+					output = input.substring(lastIndex, result.index);
+					output += input.substring(result.index, pattern.lastIndex).fontcolor("red");
+					lastIndex = pattern.lastIndex;      //firefox没有result.lastIndex。IE,Firefox都支持pattern.lastIndex
+					Positioning.items.push({'0':result.index, '1':lastIndex});
+                    var begint = new Date();
+					if(pattern.global){                 //全局时pattern.exec()才会返回null 或 ''
+						if(Browser.isFirefox){			//Firefox的 "+=" 是经过优化的，速度非常快。
+							while ((result = pattern.exec(input)) != null && result != ''){ //表达式是/\d*/g的情况下Firefox会一直返回''
+								output += input.substring(lastIndex, result.index);
+								output += input.substring(result.index, pattern.lastIndex).fontcolor("red");
+								lastIndex = pattern.lastIndex;
+								Positioning.items.push({'0':result.index, '1':lastIndex});
+							}
+							output += input.substring(lastIndex, input.length);
+                        $$("during").innerHTML = new Date() - begint; begint = new Date();
+						}else{
+							var concat = [];			//IE的 "+=" 运算相当慢，需用Array的push，join的方式代替"+=",此举可最高提速数十倍。
+							while ((result = pattern.exec(input)) != null && result != ''){ //表达式是/\d*/g的情况下Firefox会一直返回''
+								concat.push(input.substring(lastIndex, result.index));
+								concat.push(input.substring(result.index, pattern.lastIndex).fontcolor("red"));
+								lastIndex = pattern.lastIndex;
+								Positioning.items.push({'0':result.index, '1':lastIndex});
+							}
+                        $$("during").innerHTML = new Date() - begint; begint = new Date();
+							concat.push(input.substring(lastIndex, input.length));
+							output += concat.join('');
+                        $$("during").innerHTML += " " + (new Date() - begint);
+						}
+					}else{
+						//output = RegExp.leftContext + result[0].fontcolor("red") + RegExp.rightContext;
+						var rightContext = RegExp.rightContext;//调用replace方法后会改变RegExp对象的值.
+						output = RegExp.leftContext + result[0].replace(/</,'&lt;').replace(/>/,'&gt;').fontcolor("red") + rightContext;
+					}
+				//}if(pattern.test(input)){               //test方法也会改变pattern的index
+					$$("txt_msg").style.color = "green";
+					if(Browser.isIE)
+						canvas.drawRight($$("img_msg").getContext('2d'));//此句对RegExp有影响以免对上面的代码有影响改放后面
+					else
+						$$("img_msg").src = ref_island.documentElement.selectSingleNode('/root/imgsrc[1]').text;
+					$$("txt_msg").innerHTML = "匹配成功！";
+				}else if (origin != ''){
+					$$("txt_msg").style.color="#faa202";
+					if(Browser.isIE)
+						canvas.drawWarn($$("img_msg").getContext('2d'));
+					else
+						$$("img_msg").src = ref_island.documentElement.selectSingleNode('/root/imgsrc[3]').text;
+					$$("txt_msg").innerHTML = "无匹配项！";
+				}
+				{/**提示信息重置*/
+					searchTip = "first index is <font color='red'>" + input.search(pattern) + "</font>";
+					var splited = input.split(pattern);
+					if(splited){
+						var sp_Content = [];
+						var numLength = String(splited.length).length;
+						for(var i=0; i < splited.length; i++)
+							sp_Content.push('<font color=grey>' + ('0000000' + i).slice(-numLength) + '</font> ' + splited[i] + "<br/>");
+						splitTip = "<div style='width:400px;max-height:150px;overflow:auto;background-color:#CCFF99'>" + sp_Content.join('') + "</div>";
+					}
+					
+					var matched = input.match(pattern);
+					if(matched){
+						var ma_Content = [];
+						var numLength = String(matched.length).length;
+						for(var i=0; i < matched.length; i++)
+							ma_Content.push('<font color=grey>' + ('0000000' + i).slice(-numLength) + '</font> ' + matched[i] + "<br/>");
+						matchTip = "<div style='width:400px;max-height:150px;overflow:auto;background-color:#CCFF99'>" + ma_Content.join('') +"</div>";
+					}
+					!!matched && $("#previous,#next").css('visibility','visible') || $("#previous,#next").css('visibility','hidden');
+					$("#_matched").html( !!matched ? (matched.length + ' matched') : '');
+				}
+				if(Browser.isIE)
+					$$("out_replaced").innerHTML = output.replace(/\n/g," <br>");//使div换行模拟Textarea换行,空格用以在匹配换行符时，假装成\n被选中状态。
+				else															//Dom 方法提高 innerHTML。除了IE，其它浏览器都提高数倍～数百倍。
+					replaceHtml("out_replaced",output.replace(/\n/g," <br>"));
+			}
+		}
+		function replaceHtml(el, html) {
+			var oldEl = typeof el === "string" ? document.getElementById(el) : el;
+			var newEl = oldEl.cloneNode(false);
+			newEl.innerHTML = html;
+			oldEl.parentNode.replaceChild(newEl, oldEl);
+			return newEl; // 一旦我们从 DOM 上移除老的元素，则返回新的元素引用。
+		};
+		
+		//解决DIV 的 contentEditable=true 状态在IE中换行为<P>而不是<BR>的问题
+		if(Browser.isIE){				
+			/*    //<div id="out_div" contentEditable="true"  onclick="if(this.innerHTML==''){this.innerHTML = '<br>';}"></div>
+                            $$("in_txt").attachEvent("onkeypress",function(){
+				if(event.keyCode==13){
+				var txtobj = document.selection.createRange();
+					//三目复合表达式,解决有被选文字时回车的光标定位问题
+				txtobj.text == "" ? txtobj.text="\n" : (document.selection.clear())&(txtobj.text="\n");
+				document.selection.createRange().select();
+				return false;
+				}
+			});
+	
+			$$("in_txt").attachEvent("onkeyup",function(){
+				changeTestStatus();
+			});
+			
+			$$("in_txt").attachEvent("onclick",function(){
+				if(event.srcElement.innerText ==""){
+					event.srcElement.innerHTML = "";
+				}
+			});*/
+		}
+			
+		if(!Browser.isIE){ //onpropertychange事件
+			$$("in_regexp").addEventListener("input",function(){changeRegExp();changeTestStatus();}, false);
+			$$("in_txt").addEventListener("input",function(){ changeTestStatus(); }, false);
+		}
+	</script>
+	
+	<!-- <script for= event= >只在IE有效 -->
+	<!--[if IE]>
+	<script for="in_regexp" event="onpropertychange">
+		//防止刷新时触发的事件，在此例中，是jQuerY造成的额外事件。event.propertyName告诉我们是哪个属性发生了变化。
+		if(event.propertyName.search(/jQuery\d+/) < 0){
+			changeRegExp();
+			changeTestStatus();
+		}	
+	</script>
+	
+	<script for="in_txt" event="onpropertychange">
+		if(event.propertyName.search(/jQuery\d+/) < 0){
+			changeTestStatus();
+		}
+	</script>
+	<![endif]-->
+</html>
